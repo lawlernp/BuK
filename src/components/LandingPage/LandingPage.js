@@ -1,19 +1,23 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import mapStoreToProps from '../../redux/mapStoreToProps';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../redux/mapStoreToProps";
 
-import './LandingPage.css';
+import "./LandingPage.css";
 
 // CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
+import RegisterForm from "../RegisterForm/RegisterForm";
+import LoginForm from "../LoginForm/LoginForm";
 
 class LandingPage extends Component {
   state = {
-    heading: 'Class Component',
+    heading: "Class Component",
+    login: true,
   };
 
   onLogin = (event) => {
-    this.props.history.push('/login');
+    this.setState({
+      login: !this.state.login,
+    });
   };
 
   render() {
@@ -56,13 +60,23 @@ class LandingPage extends Component {
             </p>
           </div>
           <div className="grid-col grid-col_4">
-            <RegisterForm />
-
+            {this.state.login ? <LoginForm /> : <RegisterForm />}
             <center>
-              <h4>Already a Member?</h4>
-              <button className="btn btn_sizeSm" onClick={this.onLogin}>
-                Login
-              </button>
+              {this.state.login ? (
+                <>
+                  <h4>Not registered yet?</h4>
+                  <button className="btn btn_sizeSm" onClick={this.onLogin}>
+                    Create Account
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h4>Alread have an account?</h4>
+                  <button className="btn btn_sizeSm" onClick={this.onLogin}>
+                    Log in
+                  </button>
+                </>
+              )}
             </center>
           </div>
         </div>
