@@ -21,6 +21,9 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import "bulma/css/bulma.css";
+import "hint.css/hint.css";
+
 
 class App extends Component {
   componentDidMount() {

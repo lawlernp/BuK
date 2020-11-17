@@ -7,10 +7,9 @@ function* fetchBook(isbn) {
     const response = yield axios.get(
       `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn.payload}&format=json&jscmd=data`
     );
-    yield put({ type: 'SET_BOOK', payload: response.data });
+    yield put({ type: 'SET_BOOK', payload: response.data[`ISBN:${isbn.payload}`] });
 
-    console.log((response.data[`ISBN:${isbn.payload}`]));
-  } catch (error) {
+} catch (error) {
     console.log("API get failed", error);
   }
 }
