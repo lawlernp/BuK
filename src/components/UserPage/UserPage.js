@@ -28,6 +28,8 @@ class UserPage extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
+    this.props.dispatch({ type: "ADD_BOOK", payload: this.state.newBook });
+
   }
 
   toggleCamera = () => {
@@ -85,18 +87,15 @@ class UserPage extends Component {
                 rows="4"
                 cols="35"
               />
-              <button className="button" onClick={(event) => this.handleSubmit}>
-                Add Book
-              </button>
+              <input type="submit" value="Add Book" onClick={() => this.handleSubmit}></input>
             </form>
           </>
         ) : (
-          <></>
+          <Scanner />
         )}
         <br />
         <br />
-        {this.state.camera ? <Scanner /> : <></>}
-        {this.props.store.book.title ? (
+        {this.props.store.book.cover ? (
           <>
             <p>Is this the book you are looking for?</p>
             <p>{this.props.store.book.title}</p>

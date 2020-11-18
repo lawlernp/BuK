@@ -14,8 +14,17 @@ function* fetchBook(isbn) {
   }
 }
 
+function* addBook(action) {
+  try {
+    yield axios.post("/api/book", action.payload);
+  } catch (error) {
+    console.log("item post failed", error);
+  }
+}
+
 function* bookSaga() {
   yield takeLatest("GET_BOOK", fetchBook);
+  yield takeLatest("ADD_BOOK", addBook);  
 }
 
 export default bookSaga;
