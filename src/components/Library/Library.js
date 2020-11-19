@@ -8,10 +8,29 @@ import mapStoreToProps from "../../redux/mapStoreToProps";
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 class InfoPage extends Component {
+  componentDidMount = () => {
+    this.getLibrary();
+  };
+
+  getLibrary = () => {
+    this.props.dispatch({ type: "GET_LIBRARY" });
+  }
+
   render() {
     return (
       <div>
-        <p>Info Page</p>
+        <p>My Library</p>
+        <ul>
+          {this.props.store.library[0] ? (
+            <>
+              {this.props.store.library.map((book) => {
+                return <li>{book.title}</li>;
+              })}
+            </>
+          ) : (
+            <></>
+          )}
+        </ul>
       </div>
     );
   }
