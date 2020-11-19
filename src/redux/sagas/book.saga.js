@@ -22,9 +22,21 @@ function* addBook(action) {
   }
 }
 
+function* fetchLibrary() {
+  try {
+    const response = yield axios.get('/api/book');
+    yield put({ type: 'SET_LIBRARY', payload: response.data });
+
+} catch (error) {
+    console.log("Library get from DB failed", error);
+  }
+
+}
+
 function* bookSaga() {
   yield takeLatest("GET_BOOK", fetchBook);
   yield takeLatest("ADD_BOOK", addBook);  
+  yield takeLatest("GET_LIBRARY", fetchLibrary);
 }
 
 export default bookSaga;
