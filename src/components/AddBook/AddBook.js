@@ -27,7 +27,15 @@ class AddBook extends Component {
   };
 
   handleSubmit = () => {
-    this.props.dispatch({ type: "ADD_BOOK", payload: this.state.newBook });
+    if (
+      this.state.newBook.title !== "" &&
+      this.state.newBook.author !== "" &&
+      this.state.newBook.imageUrl !== ""
+    ) {
+      this.props.dispatch({ type: "ADD_BOOK", payload: this.state.newBook });
+      alert('Book Added')
+    } else
+    { alert('Please fill out all required fields')}
   };
 
   toggleCamera = () => {
@@ -61,6 +69,7 @@ class AddBook extends Component {
 
         {!this.state.camera ? (
           <>
+            <form onsubmit="return false">
               <label htmlFor="addTitle">Title:</label>
               <input
                 onChange={(event) => this.handleChange(event, "title")}
@@ -83,6 +92,7 @@ class AddBook extends Component {
                 onChange={(event) => this.handleChange(event, "imageUrl")}
                 name="imageAdd"
                 placeholder="Image URL"
+                required
               />
               <br />
               <label htmlFor="addTitle">Comments:</label>
@@ -96,11 +106,12 @@ class AddBook extends Component {
                 rows="4"
                 cols="35"
               />
-              <input
+            </form>
+              <button
                 type="submit"
                 value="Add Book"
                 onClick={this.handleSubmit}
-              ></input>
+              >Add Book</button>
           </>
         ) : (
           <Scanner />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
+import BookItem from "../BookItem/BookItem"
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -8,6 +9,7 @@ import mapStoreToProps from "../../redux/mapStoreToProps";
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 class Library extends Component {
+
   componentDidMount = () => {
     this.getLibrary();
   };
@@ -29,18 +31,7 @@ class Library extends Component {
               {this.props.store.library.map((book) => {
                 return (
                   <>
-                  <li id={book.id}>
-                    <img width="100px" src={book.imageUrl} alt={book.title} />
-                    <p>
-                      {book.title}
-                      <br />
-                      By: {book.author}
-                    </p>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                  </li>
-                  <br/>
-                  <br/>
+                  <BookItem book={book}/>
                   </>
                 );
               })}

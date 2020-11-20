@@ -15,7 +15,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import Library from "../Library/Library";
+import AddBook from "../AddBook/AddBook";
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -62,7 +62,7 @@ class App extends Component {
               // logged in shows InfoPage else shows LoginPage
               exact
               path="/library"
-              component={Library}
+              component={AddBook}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will

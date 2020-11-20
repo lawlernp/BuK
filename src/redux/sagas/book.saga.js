@@ -35,10 +35,40 @@ function* fetchLibrary() {
 
 }
 
+function* editBook(action) {
+  console.log('hello from edit book');
+  
+  try {
+    yield axios.put('/api/book', action.payload);
+  } catch (error) {
+    console.log("Edit Book Failed", error);
+  }
+}
+
+function* deleteItem(action) {
+  try {
+    yield axios.delete(`/api/book/`, action.payload);
+  } catch (error) {
+    console.log("item delete failed", error);
+  }
+}
+
+function* deleteBook(action) {
+  try {
+    yield axios.delete(`/api/book/${action.payload}`);
+  } catch (error) {
+    console.log("book delete failed", error);
+  }
+}
+
+
+
 function* bookSaga() {
   yield takeLatest("GET_BOOK", fetchBook);
   yield takeLatest("ADD_BOOK", addBook);  
   yield takeLatest("GET_LIBRARY", fetchLibrary);
+  yield takeLatest("EDIT_BOOK", editBook);
+  yield takeLatest("DELETE_BOOK", deleteBook);
 }
 
 export default bookSaga;

@@ -8,7 +8,7 @@ const {
 /**
  * GET route template
  */
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
    const queryText = `SELECT * FROM "book" WHERE "user_id" = $1`;
   pool.query(queryText, [req.user.id])
     .then(result => {
@@ -38,6 +38,50 @@ router.post("/", (req, res) => {
     });
   // code here
 });
+
+
+router.put("/", rejectUnauthenticated, (req, res) => {
+  const queryText = `UPDATE "book" SET "title" = $1, "imageUrl" = $2, "author" = $4 WHERE "id" = $3;`;
+  pool
+    .query(queryText, [req.body.title, req.body.imageUrl, req.body.id, req.body.author])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log('error in edit', error);
+      
+    });
+});
+
+
+router.delete("/", rejectUnauthenticated, (req, res) => {
+  console.log('hi from router', req.body);
+  
+  const queryText = `DELETE FROM "book" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [req.body.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+    });
+});
+
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+  const queryText = `DELETE FROM "book" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("Error deleting", error);
+    });
+});
+
 
 //   const name = req.body.name;
 //   const amount = req.body.amount;
