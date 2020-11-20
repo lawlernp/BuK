@@ -15,6 +15,8 @@ function* fetchBook(isbn) {
 }
 
 function* addBook(action) {
+  console.log(action.payload);
+  
   try {
     yield axios.post("/api/book", action.payload);
   } catch (error) {

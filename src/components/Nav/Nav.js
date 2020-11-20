@@ -13,7 +13,7 @@ const Nav = (props) => {
 
   if (props.store.user.id != null) {
     loginLinkData.path = '/user';
-    loginLinkData.text = 'Home';
+    loginLinkData.text = 'My Library';
   }
 
   return (
@@ -32,7 +32,7 @@ const Nav = (props) => {
         {props.store.user.id && (
           <>
             <Link className="nav-link" to="/library">
-              My Library
+              Add Book
             </Link>
             <LogOutButton className="nav-linkout" />
           </>

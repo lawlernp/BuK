@@ -9,8 +9,8 @@ const {
  * GET route template
  */
 router.get("/", (req, res) => {
-   const queryText = `SELECT * FROM "book"`;
-  pool.query(queryText)
+   const queryText = `SELECT * FROM "book" WHERE "user_id" = $1`;
+  pool.query(queryText, [req.user.id])
     .then(result => {
       res.send(result.rows);
     }).catch(error => {
@@ -24,18 +24,17 @@ router.get("/", (req, res) => {
  * POST route template
  */
 router.post("/", (req, res) => {
-    console.log('hi from post', req.body)
-      
-    
-//     const queryText = `INSERT INTO "book" ("description", "image_url", "user_id") VALUES ($1, $2, $3);`;
-//   pool
-//     .query(queryText, [req.body.description, req.body.imageUrl, req.user.id])
+  console.log(req.body);
+  
+    const queryText = `INSERT INTO "book" ("title", "author", "imageUrl", "user_id", "comments", "publish_date") VALUES ($1, $2, $3, $4, $5, $6);`;
+  pool
+    .query(queryText, [req.body.title, req.body.author, req.body.imageUrl, req.user.id, req.body.comments, req.body.publish_date])
     .then((result) => {
       res.sendStatus(201);
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error", error);
+      console.log('error in add book', error);
     });
   // code here
 });

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 import Scanner from "../Scanner/Scanner";
 
-class AddBook extends Component {
+class UserPage extends Component {
   state = {
     camera: false,
     newBook: {
@@ -12,7 +12,6 @@ class AddBook extends Component {
       author: "",
       comments: "",
       imageUrl: "",
-      publish_date: "",
     },
   };
 
@@ -36,18 +35,6 @@ class AddBook extends Component {
     });
   };
 
-  handleCameraAdd = () => {
-    const book = this.props.store.book
-    const newBook = {
-        title: book.title,
-        author: book.authors[0].name, 
-        imageUrl: book.cover.large,
-        publish_date: book.publish_date
-
-      }
-    this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
-  }
-
   // this component doesn't do much to start, just renders some user info to the DOM
   render() {
     return (
@@ -61,6 +48,7 @@ class AddBook extends Component {
 
         {!this.state.camera ? (
           <>
+            <form>
               <label htmlFor="addTitle">Title:</label>
               <input
                 onChange={(event) => this.handleChange(event, "title")}
@@ -99,8 +87,9 @@ class AddBook extends Component {
               <input
                 type="submit"
                 value="Add Book"
-                onClick={this.handleSubmit}
+                onClick={() => this.handleSubmit}
               ></input>
+            </form>
           </>
         ) : (
           <Scanner />
@@ -115,7 +104,7 @@ class AddBook extends Component {
               alt={this.props.store.book.title}
               src={this.props.store.book.cover.large}
             ></img>
-            <button onClick={this.handleCameraAdd}>Add Book</button>
+            <button></button>
           </>
         ) : (
           <></>
@@ -126,4 +115,4 @@ class AddBook extends Component {
 }
 
 // this allows us to use <App /> in index.js
-export default connect(mapStoreToProps)(AddBook);
+export default connect(mapStoreToProps)(UserPage);
