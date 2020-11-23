@@ -6,6 +6,7 @@ import Scanner from "../Scanner/Scanner";
 
 class AddBook extends Component {
   state = {
+    search: false,
     camera: false,
     newBook: {
       title: "",
@@ -14,6 +15,7 @@ class AddBook extends Component {
       imageUrl: "",
       publish_date: "",
     },
+    isbn: "",
   };
 
   handleChange = (event, eventType) => {
@@ -26,6 +28,12 @@ class AddBook extends Component {
     console.log(this.state.newBook);
   };
 
+  handleSearchChange = (event) => {
+    this.setState({
+      isbn: event.target.value,
+    });
+  };
+
   handleSubmit = () => {
     if (
       this.state.newBook.title !== "" &&
@@ -33,9 +41,25 @@ class AddBook extends Component {
       this.state.newBook.imageUrl !== ""
     ) {
       this.props.dispatch({ type: "ADD_BOOK", payload: this.state.newBook });
-      alert('Book Added')
-    } else
-    { alert('Please fill out all required fields')}
+      alert("Book Added");
+      this.props.history.push("/user");
+    } else {
+      alert("Please fill out all required fields");
+    }
+  };
+
+  handleSearch = () => {
+    this.props.dispatch({
+      type: "GET_BOOK",
+      payload: this.state.isbn,
+    });
+  };
+
+  toggleSearch = () => {
+    this.setState({
+      search: !this.state.search,
+      camera: false
+    });
   };
 
   toggleCamera = () => {
@@ -43,33 +67,53 @@ class AddBook extends Component {
       camera: !this.state.camera,
     });
   };
+  // let newBook = {
+  //       image: checkIfImage(newBook)
+  //   }
+  //   const checkIfImage = (bookdata) => {
+  //       if (newbook.image.large) {
+  //           return newbook.image.large
+  //       } else {
+  //           return '/'
+  //       }
+  //   }
+
+  //  const checkIfImage = (book) => {
+  //       if (book.cover.large) {
+  //           return book.cover.large
+  //       } else {
+  //           return ''
+  //       }
+  //   }
+
 
   handleCameraAdd = () => {
-    const book = this.props.store.book
+    const book = this.props.store.book;
     const newBook = {
-        title: book.title,
-        author: book.authors[0].name, 
-        imageUrl: book.cover.large,
-        publish_date: book.publish_date
-
-      }
+      title: book.title,
+      author: book.authors[0].name,
+      imageUrl: book.cover.large,
+      publish_date: book.publish_date,
+    };
     this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
-  }
+    alert("Book Added");
+    this.props.dispatch({ type: "UNSET_BOOK" });
+
+    // this.props.history.push("/user");
+  };
 
   // this component doesn't do much to start, just renders some user info to the DOM
   render() {
     return (
       <div className="body">
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
-        <p>Your ID is: {this.props.store.user.id}</p>
+        <br/>
         {/* <LogOutButton className="log-in" /> */}
-        <button id="camera" className="button" onClick={this.toggleCamera}>
-          Use Camera?
-        </button>
-
-        {!this.state.camera ? (
+        <p>Add Books Here</p>
+<br/>
+        {!this.state.search ? (
           <>
-            <form onsubmit="return false">
+            <form onSubmit="return false">
               <label htmlFor="addTitle">Title:</label>
               <input
                 onChange={(event) => this.handleChange(event, "title")}
@@ -107,27 +151,99 @@ class AddBook extends Component {
                 cols="35"
               />
             </form>
-              <button
-                type="submit"
-                value="Add Book"
-                onClick={this.handleSubmit}
-              >Add Book</button>
+            <button
+              className="button"
+              type="submit"
+              value="Add Book"
+              onClick={this.handleSubmit}
+            >
+              Add Book Directly
+            </button>
           </>
         ) : (
-          <Scanner />
+          <></>
         )}
         <br />
         <br />
-        {this.props.store.book.cover ? (
+        {!this.state.search ? (
+          <>
+            <p>OR</p>
+            <br />
+            <button className="button" onClick={this.toggleSearch}>
+              Search By ISBN?
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
+        {this.state.search ? (
+          <>
+            <p>Searching by ISBN</p>
+            <br />
+          </>
+        ) : (
+          <></>
+        )}
+
+        {this.state.search && !this.state.camera ? (
+          <>
+            <input placeholder="ISBN" onChange={this.handleSearchChange} />
+
+            <button className="button" onClick={this.handleSearch}>
+              Search
+            </button>
+
+            <button id="camera" className="button" onClick={this.toggleCamera}>
+              Use Camera?
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
+
+        {this.state.search && this.state.camera ? (
+          <>
+            <Scanner />{" "}
+            <button id="camera" className="button" onClick={this.toggleCamera}>
+              Back to Manual Search
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
+        <br />
+        <br />
+
+        {this.props.store.book.title && this.state.search ? (
           <>
             <p>Is this the book you are looking for?</p>
             <p>{this.props.store.book.title}</p>
-            <img
-              alt={this.props.store.book.title}
-              src={this.props.store.book.cover.large}
-            ></img>
-            <button onClick={this.handleCameraAdd}>Add Book</button>
+            <p>By: {this.props.store.book.authors[0].name}</p>
+            {this.props.store.book.cover ? (
+              <img
+                width="150px"
+                alt={this.props.store.book.title}
+                src={this.props.store.book.cover.large}
+              ></img>
+            ) : (
+              <></>
+            )}
+            <button className="button" onClick={this.handleCameraAdd}>
+              Add Book
+            </button>
+            <br />
           </>
+        ) : (
+          <></>
+        )}
+
+        {this.state.search ? (
+          <footer>
+            <p> Want to add book manually?</p>
+            <button className="button" onClick={this.toggleSearch}>
+              Go Back
+            </button>
+          </footer>
         ) : (
           <></>
         )}

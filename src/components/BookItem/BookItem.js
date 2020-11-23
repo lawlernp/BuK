@@ -52,9 +52,9 @@ class BookItem extends Component {
               type: "EDIT_BOOK",
               payload: this.state.book,
             });
-            alert("Edit Confirmed");
+            alert("Book Updated");
             this.setState({
-            editToggle: !this.state.editToggle,
+            editToggle: false,
             });
           } else {
             alert("Please fill out all required fields");
@@ -71,6 +71,16 @@ class BookItem extends Component {
             src={this.props.book.imageUrl}
             alt={this.props.book.title}
           />
+
+          <label for="users">Checkout to user:</label>
+          <select name="users" id="users">
+            <optgroup label="Users">
+              <option value="1">nick</option>
+              <option value="2">bre</option>
+              <option value="3">squee</option>
+            </optgroup>
+          </select>
+
           {this.state.editToggle ? (
             <></>
           ) : (

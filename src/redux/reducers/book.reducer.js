@@ -2,7 +2,7 @@ const bookReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_BOOK":
       return action.payload;
-    case "UNSET_SECRETS":
+    case "UNSET_BOOK":
       return {};
     default:
       return state;

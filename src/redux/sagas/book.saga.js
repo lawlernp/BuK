@@ -40,22 +40,16 @@ function* editBook(action) {
   
   try {
     yield axios.put('/api/book', action.payload);
+    yield put({type: "GET_LIBRARY"});
   } catch (error) {
     console.log("Edit Book Failed", error);
-  }
-}
-
-function* deleteItem(action) {
-  try {
-    yield axios.delete(`/api/book/`, action.payload);
-  } catch (error) {
-    console.log("item delete failed", error);
   }
 }
 
 function* deleteBook(action) {
   try {
     yield axios.delete(`/api/book/${action.payload}`);
+    yield put({type: "GET_LIBRARY"});
   } catch (error) {
     console.log("book delete failed", error);
   }

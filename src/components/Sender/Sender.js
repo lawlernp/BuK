@@ -16,8 +16,8 @@ class Sender extends Component {
         <p>{this.props.data}</p>
 
         <button className="button is-fullwidth" onClick={this.getBook}>
-          <span className="hint--bottom" aria-label="Thank you!">
-            Test
+          <span className="hint--bottom" aria-label="Click to search OpenLibrary's API">
+            Search by ISBN
           </span>
         </button>
       </>
