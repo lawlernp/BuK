@@ -53,19 +53,19 @@ router.put("/", rejectUnauthenticated, (req, res) => {
 });
 
 
-router.delete("/", rejectUnauthenticated, (req, res) => {
-  console.log('hi from router', req.body);
+// router.delete("/", rejectUnauthenticated, (req, res) => {
+//   console.log('hi from router', req.body);
   
-  const queryText = `DELETE FROM "book" WHERE "id" = $1;`;
-  pool
-    .query(queryText, [req.body.id])
-    .then((result) => {
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-    });
-});
+//   const queryText = `DELETE FROM "book" WHERE "id" = $1;`;
+//   pool
+//     .query(queryText, [req.body.id])
+//     .then((result) => {
+//       res.sendStatus(201);
+//     })
+//     .catch((error) => {
+//       res.sendStatus(500);
+//     });
+// });
 
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
   const queryText = `DELETE FROM "book" WHERE "id" = $1;`;

@@ -74,9 +74,16 @@ class BookItem extends Component {
         <label htmlFor="users">Checkout to user:</label>
         <select name="users" id="users">
           <optgroup label="Users">
-            <option value="1">nick</option>
-            <option value="2">bre</option>
-            <option value="3">squee</option>
+              <option value={this.props.store.user.id}>Me</option>
+            {this.props.store.friendList[0] ? (
+              <>
+                {this.props.store.friendList.map((friend) => {
+                  return <option value={friend.id}>{friend.username}</option>;
+                })}
+              </>
+            ) : (
+              <></>
+            )}
           </optgroup>
         </select>
 

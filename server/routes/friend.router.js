@@ -6,18 +6,19 @@ const router = express.Router();
 /**
  * GET route template
  */
-router.get("/:user", (req, res) => {    
-   const queryText = `SELECT "username", "id" FROM "user" WHERE "username" = $1;`;
-   pool
-     .query(queryText, [req.params.user])
-     .then((result) => {         
-       res.send(result.rows[0]);
-     })
-     .catch((error) => {
-       res.sendStatus(500);
-       alert("error in GET", error);
-     });
+router.get("/:user", (req, res) => {
+  const queryText = `SELECT "username", "id" FROM "user" WHERE "username" = $1;`;
+  pool
+    .query(queryText, [req.params.user])
+    .then((result) => {
+      res.send(result.rows[0]);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      alert("error in GET", error);
+    });
 });
+
 
 /**
  * POST route template

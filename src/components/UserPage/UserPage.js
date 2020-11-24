@@ -16,6 +16,7 @@ class Library extends Component {
   componentDidMount = () => {
     this.getLibrary();
     this.clearFriendSearch();
+    this.getFriendList();
   };
 
   getLibrary = () => {
@@ -54,35 +55,52 @@ class Library extends Component {
     alert("Friend Added.");
   };
 
+  getFriendList = () => {
+    this.props.dispatch({ type: "GET_FRIEND_LIST" });
+  }
+
   render() {
     return (
       <>
-        <input
-          placeholder="Search for user"
-          onChange={(event) => this.handleChange(event)}
-        />
-        <button
-          className="button is-small is-light"
-          onClick={this.handleSubmit}
-        >
-          Search
-        </button>
-        {this.props.store.friend.username ? (
+        <div id="friendSearch">
+          <input
+            placeholder="Search for user"
+            onChange={(event) => this.handleChange(event)}
+          />
+          <button
+            className="button is-small is-light"
+            onClick={this.handleSubmit}
+          >
+            Search
+          </button>
+          {this.props.store.friend.username ? (
+            <>
+              <p>Is this the user you were looking for?</p>
+              <p>
+                {this.props.store.friend.username}{" "}
+                <button
+                  className="button is-primary is-small is-light"
+                  onClick={this.addFriend}
+                >
+                  Add
+                </button>
+              </p>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+        {/* <div id="friendList">
+          {this.props.store.friendList[0] ?
           <>
-            <p>Is this the user you were looking for?</p>
-            <p>
-              {this.props.store.friend.username}{" "}
-              <button
-                className="button is-primary is-small is-light"
-                onClick={this.addFriend}
-              >
-                Add
-              </button>
-            </p>
+          {this.props.store.friendList.map((friend) => {
+            return <p>{friend.username}</p>;
+          })}
           </>
-        ) : (
+          :
           <></>
-        )}
+        }
+        </div> */}
         <div>
           <p>{this.props.store.user.username}'s Library</p>
           <br />
