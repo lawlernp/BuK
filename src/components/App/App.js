@@ -61,7 +61,7 @@ class App extends Component {
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
-              path="/library"
+              path="/add"
               component={AddBook}
             />
 

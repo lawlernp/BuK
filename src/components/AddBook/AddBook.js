@@ -49,16 +49,20 @@ class AddBook extends Component {
   };
 
   handleSearch = () => {
+    if (this.state.isbn !== '') {
     this.props.dispatch({
       type: "GET_BOOK",
       payload: this.state.isbn,
-    });
+    });}
+    else {
+      alert('Please enter a number.')
+    }
   };
 
   toggleSearch = () => {
     this.setState({
       search: !this.state.search,
-      camera: false
+      camera: false,
     });
   };
 
@@ -86,7 +90,6 @@ class AddBook extends Component {
   //       }
   //   }
 
-
   handleCameraAdd = () => {
     const book = this.props.store.book;
     const newBook = {
@@ -107,13 +110,12 @@ class AddBook extends Component {
     return (
       <div className="body">
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
-        <br/>
-        {/* <LogOutButton className="log-in" /> */}
+        <br />
         <p>Add Books Here</p>
-<br/>
+        <br />
         {!this.state.search ? (
           <>
-            <form onSubmit="return false">
+            <form>
               <label htmlFor="addTitle">Title:</label>
               <input
                 onChange={(event) => this.handleChange(event, "title")}
@@ -205,13 +207,12 @@ class AddBook extends Component {
           <>
             <Scanner />{" "}
             <button id="camera" className="button" onClick={this.toggleCamera}>
-              Back to Manual Search
+              Disable Camera
             </button>
           </>
         ) : (
           <></>
         )}
-        <br />
         <br />
 
         {this.props.store.book.title && this.state.search ? (

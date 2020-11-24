@@ -64,62 +64,78 @@ class BookItem extends Component {
 
   render() {
     return (
-      <>
-        <li id={this.props.book.id}>
-          <img
-            width="100px"
-            src={this.props.book.imageUrl}
-            alt={this.props.book.title}
-          />
+      <li id={this.props.book.id}>
+        <img
+          width="100px"
+          src={this.props.book.imageUrl}
+          alt={this.props.book.title}
+        />
 
-          <label for="users">Checkout to user:</label>
-          <select name="users" id="users">
-            <optgroup label="Users">
-              <option value="1">nick</option>
-              <option value="2">bre</option>
-              <option value="3">squee</option>
-            </optgroup>
-          </select>
+        <label htmlFor="users">Checkout to user:</label>
+        <select name="users" id="users">
+          <optgroup label="Users">
+            <option value="1">nick</option>
+            <option value="2">bre</option>
+            <option value="3">squee</option>
+          </optgroup>
+        </select>
 
-          {this.state.editToggle ? (
-            <></>
-          ) : (
-            <p>
-              {this.props.book.title}
-              <br />
-              By: {this.props.book.author}
-            </p>
-          )}
+        {this.state.editToggle ? (
+          <></>
+        ) : (
+          <p>
+            {this.props.book.title}
+            <br />
+            By: {this.props.book.author}
+          </p>
+        )}
 
-          <button onClick={this.handleEditToggle}>Edit</button>
-          {this.state.editToggle ? (
-            <>
-              <input
-                name="title"
-                onChange={(event) => this.handleChange(event, "title")}
-                value={this.state.book.title}
-              />
-              <input
-                name="author"
-                onChange={(event) => this.handleChange(event, "author")}
-                value={this.state.book.author}
-              />
-              <input
-                name="imageUrl"
-                onChange={(event) => this.handleChange(event, "imageUrl")}
-                value={this.state.book.imageUrl}
-              />
-              <button onClick={this.submitEdit}>Confirm Edit</button>
-              <button onClick={this.handleEditToggle}>Cancel</button>
-            </>
-          ) : (
-            <></>
-          )}
-          <button onClick={this.handleDelete}>Delete</button>
-        </li>
-        <br />
-        <br />
-      </>
+        <button
+          className="button is-small is-light"
+          onClick={this.handleEditToggle}
+        >
+          Edit
+        </button>
+        {this.state.editToggle ? (
+          <>
+            <input
+              name="title"
+              onChange={(event) => this.handleChange(event, "title")}
+              value={this.state.book.title}
+            />
+            <input
+              name="author"
+              onChange={(event) => this.handleChange(event, "author")}
+              value={this.state.book.author}
+            />
+            <input
+              name="imageUrl"
+              onChange={(event) => this.handleChange(event, "imageUrl")}
+              value={this.state.book.imageUrl}
+            />
+            <button
+              className="button is-small is-light"
+              onClick={this.submitEdit}
+            >
+              Confirm Edit
+            </button>
+            <button
+              className="button is-small is-light"
+              onClick={this.handleEditToggle}
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
+        <button
+          className="button is-small is-light"
+          onClick={this.handleDelete}
+        >
+          Delete
+        </button>
+      </li>
     );
   }
 }

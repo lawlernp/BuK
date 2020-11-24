@@ -36,7 +36,7 @@ function* fetchLibrary() {
 }
 
 function* editBook(action) {
-  console.log('hello from edit book');
+  // console.log('hello from edit book');
   
   try {
     yield axios.put('/api/book', action.payload);

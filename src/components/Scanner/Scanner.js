@@ -3,7 +3,7 @@ import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import Sender from "../Sender/Sender";
 
 function Barcode() {
-  const [data, setData] = React.useState("Not Found");
+  const [data, setData] = React.useState("Searching for ISBN...");
 
   return (
     <>

@@ -4,10 +4,14 @@ import mapStoreToProps from "../../redux/mapStoreToProps";
 
 class Sender extends Component {
   getBook = () => {
-    this.props.dispatch({
-      type: "GET_BOOK",
-      payload: this.props.data,
-    });
+    if (this.props.data !== "Searching for ISBN...") {
+      this.props.dispatch({
+        type: "GET_BOOK",
+        payload: this.props.data,
+      });
+    } else {
+      alert("ISBN not found, try again.");
+    }
   };
 
   render() {
@@ -17,7 +21,7 @@ class Sender extends Component {
 
         <button className="button is-fullwidth" onClick={this.getBook}>
           <span className="hint--bottom" aria-label="Click to search OpenLibrary's API">
-            Search by ISBN
+            Search
           </span>
         </button>
       </>

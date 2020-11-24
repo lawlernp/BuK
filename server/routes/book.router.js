@@ -23,9 +23,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post("/", (req, res) => {
-  console.log(req.body);
-  
+router.post("/", (req, res) => {  
     const queryText = `INSERT INTO "book" ("title", "author", "imageUrl", "user_id", "comments", "publish_date") VALUES ($1, $2, $3, $4, $5, $6);`;
   pool
     .query(queryText, [req.body.title, req.body.author, req.body.imageUrl, req.user.id, req.body.comments, req.body.publish_date])
