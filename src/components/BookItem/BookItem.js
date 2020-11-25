@@ -21,12 +21,6 @@ class BookItem extends Component {
 
   componentDidMount = () => {};
 
-  handleEditToggle = () => {
-    this.setState({
-      editToggle: !this.state.editToggle,
-    });
-  };
-
   handleChange = (event, eventType) => {
     this.setState({
       book: {
@@ -35,6 +29,23 @@ class BookItem extends Component {
       },
     });
     console.log(this.state.book);
+  };
+
+  handleCheckoutChange = (event) => {
+    const checkout = {
+      id: this.props.book.id,
+      user: event.target.value,
+    };
+    this.props.dispatch({
+      type: "CHECKOUT_BOOK",
+      payload: checkout,
+    });
+  };
+
+  handleEditToggle = () => {
+    this.setState({
+      editToggle: !this.state.editToggle,
+    });
   };
 
   handleDelete = () => {
@@ -58,17 +69,6 @@ class BookItem extends Component {
     } else {
       alert("Please fill out all required fields");
     }
-  };
-
-  handleCheckoutChange = (event) => {
-      const checkout = {
-          id: this.props.book.id,
-          user: event.target.value,
-        };
-      this.props.dispatch({
-        type: "CHECKOUT_BOOK",
-        payload: checkout,
-      });
   };
 
   render() {

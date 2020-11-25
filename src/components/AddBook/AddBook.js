@@ -18,6 +18,19 @@ class AddBook extends Component {
     isbn: "",
   };
 
+  handleCameraAdd = () => {
+    const book = this.props.store.book;
+    const newBook = {
+      title: book.title,
+      author: book.authors[0].name,
+      imageUrl: book.cover.large,
+      publish_date: book.publish_date,
+    };
+    this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
+    alert("Book Added");
+    this.props.dispatch({ type: "UNSET_BOOK" });
+  };
+
   handleChange = (event, eventType) => {
     this.setState({
       newBook: {
@@ -26,6 +39,17 @@ class AddBook extends Component {
       },
     });
     console.log(this.state.newBook);
+  };
+
+  handleSearch = () => {
+    if (this.state.isbn !== "") {
+      this.props.dispatch({
+        type: "GET_BOOK",
+        payload: this.state.isbn,
+      });
+    } else {
+      alert("Please enter a number.");
+    }
   };
 
   handleSearchChange = (event) => {
@@ -48,15 +72,10 @@ class AddBook extends Component {
     }
   };
 
-  handleSearch = () => {
-    if (this.state.isbn !== '') {
-    this.props.dispatch({
-      type: "GET_BOOK",
-      payload: this.state.isbn,
-    });}
-    else {
-      alert('Please enter a number.')
-    }
+  toggleCamera = () => {
+    this.setState({
+      camera: !this.state.camera,
+    });
   };
 
   toggleSearch = () => {
@@ -66,46 +85,6 @@ class AddBook extends Component {
     });
   };
 
-  toggleCamera = () => {
-    this.setState({
-      camera: !this.state.camera,
-    });
-  };
-  // let newBook = {
-  //       image: checkIfImage(newBook)
-  //   }
-  //   const checkIfImage = (bookdata) => {
-  //       if (newbook.image.large) {
-  //           return newbook.image.large
-  //       } else {
-  //           return '/'
-  //       }
-  //   }
-
-  //  const checkIfImage = (book) => {
-  //       if (book.cover.large) {
-  //           return book.cover.large
-  //       } else {
-  //           return ''
-  //       }
-  //   }
-
-  handleCameraAdd = () => {
-    const book = this.props.store.book;
-    const newBook = {
-      title: book.title,
-      author: book.authors[0].name,
-      imageUrl: book.cover.large,
-      publish_date: book.publish_date,
-    };
-    this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
-    alert("Book Added");
-    this.props.dispatch({ type: "UNSET_BOOK" });
-
-    // this.props.history.push("/user");
-  };
-
-  // this component doesn't do much to start, just renders some user info to the DOM
   render() {
     return (
       <div className="body">

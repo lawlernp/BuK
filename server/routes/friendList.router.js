@@ -3,11 +3,10 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 /**
- * GET route template
+ * GET route to grab usernames from friend list
  */
 router.get("/", (req, res) => {
-    console.log('friendlist get');
-    
+    // console.log('friendlist get');   
   const queryText = `SELECT "user"."id", "username" FROM "user" JOIN "friend_list" on "friend_list".friend_id = "user".id WHERE "friend_list".user_id = $1;`;
   pool
     .query(queryText, [req.user.id])

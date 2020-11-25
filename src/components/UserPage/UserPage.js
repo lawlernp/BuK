@@ -19,6 +19,25 @@ class Library extends Component {
     this.getFriendList();
   };
 
+  addFriend = () => {
+    this.props.dispatch({
+      type: "ADD_FRIEND",
+      payload: this.props.store.friend,
+    });
+    alert("Friend Added.");
+  };
+
+  clearFriendSearch = () => {
+    this.props.dispatch({
+      type: "GET_FRIEND",
+      payload: {},
+    });
+  };
+
+  getFriendList = () => {
+    this.props.dispatch({ type: "GET_FRIEND_LIST" });
+  };
+
   getLibrary = () => {
     this.props.dispatch({ type: "GET_LIBRARY" });
   };
@@ -39,25 +58,6 @@ class Library extends Component {
       alert("Please enter a username.");
     }
   };
-
-  clearFriendSearch = () => {
-    this.props.dispatch({
-      type: "GET_FRIEND",
-      payload: {},
-    });
-  };
-
-  addFriend = () => {
-    this.props.dispatch({
-      type: "ADD_FRIEND",
-      payload: this.props.store.friend,
-    });
-    alert("Friend Added.");
-  };
-
-  getFriendList = () => {
-    this.props.dispatch({ type: "GET_FRIEND_LIST" });
-  }
 
   render() {
     return (

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 
 class Sender extends Component {
+  
   getBook = () => {
     if (this.props.data !== "Searching for ISBN...") {
       this.props.dispatch({
