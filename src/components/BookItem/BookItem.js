@@ -19,8 +19,7 @@ class BookItem extends Component {
     },
   };
 
-  componentDidMount = () => {
-  };
+  componentDidMount = () => {};
 
   handleEditToggle = () => {
     this.setState({
@@ -40,26 +39,36 @@ class BookItem extends Component {
 
   handleDelete = () => {
     this.props.dispatch({ type: "DELETE_BOOK", payload: this.props.book.id });
-  }
+  };
 
   submitEdit = () => {
-          if (
-            this.state.book.title !== "" &&
-            this.state.book.author !== "" &&
-            this.state.book.imageUrl !== ""
-          ) {
-            this.props.dispatch({
-              type: "EDIT_BOOK",
-              payload: this.state.book,
-            });
-            alert("Book Updated");
-            this.setState({
-            editToggle: false,
-            });
-          } else {
-            alert("Please fill out all required fields");
-          }
+    if (
+      this.state.book.title !== "" &&
+      this.state.book.author !== "" &&
+      this.state.book.imageUrl !== ""
+    ) {
+      this.props.dispatch({
+        type: "EDIT_BOOK",
+        payload: this.state.book,
+      });
+      alert("Book Updated");
+      this.setState({
+        editToggle: false,
+      });
+    } else {
+      alert("Please fill out all required fields");
+    }
+  };
 
+  handleCheckoutChange = (event) => {
+      const checkout = {
+          id: this.props.book.id,
+          user: event.target.value,
+        };
+      this.props.dispatch({
+        type: "CHECKOUT_BOOK",
+        payload: checkout,
+      });
   };
 
   render() {
@@ -72,14 +81,19 @@ class BookItem extends Component {
         />
 
         <label htmlFor="users">Checkout to user:</label>
-        <select name="users" id="users">
+        <select
+          onChange={(event) => this.handleCheckoutChange(event)}
+          name="users"
+          id="users"
+        >
           <optgroup label="Users">
-              <option value={this.props.store.user.id}>Me</option>
+            <option value={this.props.store.user.id}>Me</option>
             {this.props.store.friendList[0] ? (
               <>
                 {this.props.store.friendList.map((friend) => {
                   return <option value={friend.id}>{friend.username}</option>;
                 })}
+                {/* <button onClick= */}
               </>
             ) : (
               <></>
@@ -142,6 +156,19 @@ class BookItem extends Component {
         >
           Delete
         </button>
+        {this.props.book.checkout_id &&
+        this.props.book.checkout_id !== this.props.store.user.id ? (
+          <>
+            <p>
+              This book is currently checked out by {this.props.book.username}
+            </p>
+          </>
+        ) : (
+          <>
+            <p>This book is currently in your library.</p>
+          </>
+        )}
+        <br />
       </li>
     );
   }

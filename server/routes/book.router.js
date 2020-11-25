@@ -9,7 +9,8 @@ const {
  * GET route template
  */
 router.get("/", rejectUnauthenticated, (req, res) => {
-   const queryText = `SELECT * FROM "book" WHERE "user_id" = $1 ORDER BY "author"`;
+   const queryText = `SELECT "book"."id", "title", "author", "imageUrl", "publish_date", "isbn", "user_id", "comments", "checkout_id", "username" FROM "book" 
+JOIN "user" ON "book".checkout_id = "user".id WHERE "user_id" = $1 ORDER BY "author";`;
   pool.query(queryText, [req.user.id])
     .then(result => {
       res.send(result.rows);
@@ -23,6 +24,20 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
+router.post("/", (req, res) => {  
+    const queryText = `INSERT INTO "book" ("title", "author", "imageUrl", "user_id", "comments", "publish_date", "checkout_id") VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+  pool
+    .query(queryText, [req.body.title, req.body.author, req.body.imageUrl, req.user.id, req.body.comments, req.body.publish_date, req.user.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log('error in add book', error);
+    });
+  // code here
+});
+
 router.post("/", (req, res) => {  
     const queryText = `INSERT INTO "book" ("title", "author", "imageUrl", "user_id", "comments", "publish_date") VALUES ($1, $2, $3, $4, $5, $6);`;
   pool
@@ -52,6 +67,22 @@ router.put("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put("/checkout", rejectUnauthenticated, (req, res) => {
+  console.log(req.body);
+  const queryText = `UPDATE "book" SET "checkout_id" = $1 WHERE "id" = $2;`;
+  pool
+    .query(queryText, [
+      +req.body.user,
+      req.body.id,
+    ])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in edit", error);
+    });
+});
 
 // router.delete("/", rejectUnauthenticated, (req, res) => {
 //   console.log('hi from router', req.body);

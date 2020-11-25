@@ -55,6 +55,15 @@ function* deleteBook(action) {
   }
 }
 
+function* checkoutBook(action) {
+  try {
+    yield axios.put('/api/book/checkout', action.payload);
+    yield put({type: "GET_LIBRARY"});
+  } catch (error) {
+    console.log("Edit Book Failed", error);
+  }
+}
+
 
 
 function* bookSaga() {
@@ -63,6 +72,7 @@ function* bookSaga() {
   yield takeLatest("GET_LIBRARY", fetchLibrary);
   yield takeLatest("EDIT_BOOK", editBook);
   yield takeLatest("DELETE_BOOK", deleteBook);
+  yield takeLatest("CHECKOUT_BOOK", checkoutBook);
 }
 
 export default bookSaga;
