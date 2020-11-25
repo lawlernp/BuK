@@ -18,9 +18,7 @@ class BookItem extends Component {
       id: this.props.book.id,
     },
   };
-
-  componentDidMount = () => {};
-
+  //// listens to edit book inputs and sets changes to state
   handleChange = (event, eventType) => {
     this.setState({
       book: {
@@ -30,7 +28,7 @@ class BookItem extends Component {
     });
     console.log(this.state.book);
   };
-
+  //// dispatches any changes to checkout dropdown for record in DB
   handleCheckoutChange = (event) => {
     const checkout = {
       id: this.props.book.id,
@@ -41,17 +39,17 @@ class BookItem extends Component {
       payload: checkout,
     });
   };
-
+  //// toggles edit inputs
   handleEditToggle = () => {
     this.setState({
       editToggle: !this.state.editToggle,
     });
   };
-
+  //// dispatches a delete for current book
   handleDelete = () => {
     this.props.dispatch({ type: "DELETE_BOOK", payload: this.props.book.id });
   };
-
+  //// checks for empty inputs and submits edits to book to DB
   submitEdit = () => {
     if (
       this.state.book.title !== "" &&

@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
 
 class Sender extends Component {
-  
+  //// checks to see if ISBN has been found, and dispatches to OpenLibrary
+  // API
   getBook = () => {
     if (this.props.data !== "Searching for ISBN...") {
       this.props.dispatch({

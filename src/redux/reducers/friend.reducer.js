@@ -1,4 +1,6 @@
+// stores user from search for friend add
 const friendReducer = (state = {}, action) => {
+
   switch (action.type) {
     case "SET_FRIEND":
       return action.payload;

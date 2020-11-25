@@ -12,13 +12,13 @@ class Library extends Component {
   state = {
     friendSearch: "",
   };
-
+  //// gets all data for render on mount
   componentDidMount = () => {
     this.getLibrary();
     this.clearFriendSearch();
     this.getFriendList();
   };
-
+  //// add function for friend search
   addFriend = () => {
     this.props.dispatch({
       type: "ADD_FRIEND",
@@ -26,28 +26,29 @@ class Library extends Component {
     });
     alert("Friend Added.");
   };
-
+  //// clears friend search results
   clearFriendSearch = () => {
     this.props.dispatch({
       type: "GET_FRIEND",
       payload: {},
     });
   };
-
+  //// gets friend list from DB
   getFriendList = () => {
     this.props.dispatch({ type: "GET_FRIEND_LIST" });
   };
-
+  //// get library from DB
   getLibrary = () => {
     this.props.dispatch({ type: "GET_LIBRARY" });
   };
-
+  //// listens to friend search input
   handleChange = (event) => {
     this.setState({
       friendSearch: event.target.value,
     });
   };
-
+  //// checks friend search input for empty string and dispatches to DB to
+  // search user table for matches
   handleSubmit = () => {
     if (this.state.friendSearch !== "") {
       this.props.dispatch({

@@ -17,7 +17,8 @@ class AddBook extends Component {
     },
     isbn: "",
   };
-
+  //// this bundles up the data from the OpenLibrary API get and sends it off to
+  // save in the DB
   handleCameraAdd = () => {
     const book = this.props.store.book;
     const newBook = {
@@ -30,7 +31,8 @@ class AddBook extends Component {
     alert("Book Added");
     this.props.dispatch({ type: "UNSET_BOOK" });
   };
-
+  //// this listens for changes in the manual input section and assigns
+  // them to state
   handleChange = (event, eventType) => {
     this.setState({
       newBook: {
@@ -40,7 +42,7 @@ class AddBook extends Component {
     });
     console.log(this.state.newBook);
   };
-
+  //// handles dispatching isbn manual search to hit the OpenLibrary API
   handleSearch = () => {
     if (this.state.isbn !== "") {
       this.props.dispatch({
@@ -51,13 +53,13 @@ class AddBook extends Component {
       alert("Please enter a number.");
     }
   };
-
+  //// listens to the manual ISBN seach input and sets changes to state
   handleSearchChange = (event) => {
     this.setState({
       isbn: event.target.value,
     });
   };
-
+  //// handles dispatching for manual book add, checking for empty values
   handleSubmit = () => {
     if (
       this.state.newBook.title !== "" &&
@@ -71,13 +73,13 @@ class AddBook extends Component {
       alert("Please fill out all required fields");
     }
   };
-
+  //// handles toggle of camera search
   toggleCamera = () => {
     this.setState({
       camera: !this.state.camera,
     });
   };
-
+  //// handles toggle of search function
   toggleSearch = () => {
     this.setState({
       search: !this.state.search,

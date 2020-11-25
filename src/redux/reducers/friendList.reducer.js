@@ -1,3 +1,4 @@
+// holds friends for checkout feature
 const friendListReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_FRIEND_LIST":
