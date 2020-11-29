@@ -2,8 +2,9 @@ import React from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import Sender from "../Sender/Sender";
 
+//// this is setting up the viewport for barcode scanner
 function Barcode() {
-  const [data, setData] = React.useState("Not Found");
+  const [data, setData] = React.useState("Searching for ISBN...");
 
   return (
     <>

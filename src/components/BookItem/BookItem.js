@@ -18,16 +18,7 @@ class BookItem extends Component {
       id: this.props.book.id,
     },
   };
-
-  componentDidMount = () => {
-  };
-
-  handleEditToggle = () => {
-    this.setState({
-      editToggle: !this.state.editToggle,
-    });
-  };
-
+  //// listens to edit book inputs and sets changes to state
   handleChange = (event, eventType) => {
     this.setState({
       book: {
@@ -37,89 +28,146 @@ class BookItem extends Component {
     });
     console.log(this.state.book);
   };
-
+  //// dispatches any changes to checkout dropdown for record in DB
+  handleCheckoutChange = (event) => {
+    const checkout = {
+      id: this.props.book.id,
+      user: event.target.value,
+    };
+    this.props.dispatch({
+      type: "CHECKOUT_BOOK",
+      payload: checkout,
+    });
+  };
+  //// toggles edit inputs
+  handleEditToggle = () => {
+    this.setState({
+      editToggle: !this.state.editToggle,
+    });
+  };
+  //// dispatches a delete for current book
   handleDelete = () => {
     this.props.dispatch({ type: "DELETE_BOOK", payload: this.props.book.id });
-  }
-
+  };
+  //// checks for empty inputs and submits edits to book to DB
   submitEdit = () => {
-          if (
-            this.state.book.title !== "" &&
-            this.state.book.author !== "" &&
-            this.state.book.imageUrl !== ""
-          ) {
-            this.props.dispatch({
-              type: "EDIT_BOOK",
-              payload: this.state.book,
-            });
-            alert("Book Updated");
-            this.setState({
-            editToggle: false,
-            });
-          } else {
-            alert("Please fill out all required fields");
-          }
-
+    if (
+      this.state.book.title !== "" &&
+      this.state.book.author !== "" &&
+      this.state.book.imageUrl !== ""
+    ) {
+      this.props.dispatch({
+        type: "EDIT_BOOK",
+        payload: this.state.book,
+      });
+      alert("Book Updated");
+      this.setState({
+        editToggle: false,
+      });
+    } else {
+      alert("Please fill out all required fields");
+    }
   };
 
   render() {
     return (
-      <>
-        <li id={this.props.book.id}>
-          <img
-            width="100px"
-            src={this.props.book.imageUrl}
-            alt={this.props.book.title}
-          />
+      <li id={this.props.book.id}>
+        <img
+          width="100px"
+          src={this.props.book.imageUrl}
+          alt={this.props.book.title}
+        />
 
-          <label for="users">Checkout to user:</label>
-          <select name="users" id="users">
-            <optgroup label="Users">
-              <option value="1">nick</option>
-              <option value="2">bre</option>
-              <option value="3">squee</option>
-            </optgroup>
-          </select>
+        <label htmlFor="users">Checkout to user:</label>
+        <select
+          onChange={(event) => this.handleCheckoutChange(event)}
+          name="users"
+          id="users"
+        >
+          <optgroup label="Users">
+            <option value={this.props.store.user.id}>Me</option>
+            {this.props.store.friendList[0] ? (
+              <>
+                {this.props.store.friendList.map((friend) => {
+                  return <option value={friend.id}>{friend.username}</option>;
+                })}
+                {/* <button onClick= */}
+              </>
+            ) : (
+              <></>
+            )}
+          </optgroup>
+        </select>
 
-          {this.state.editToggle ? (
-            <></>
-          ) : (
+        {this.state.editToggle ? (
+          <></>
+        ) : (
+          <p>
+            {this.props.book.title}
+            <br />
+            By: {this.props.book.author}
+          </p>
+        )}
+
+        <button
+          className="button is-small is-light"
+          onClick={this.handleEditToggle}
+        >
+          Edit
+        </button>
+        {this.state.editToggle ? (
+          <>
+            <input
+              name="title"
+              onChange={(event) => this.handleChange(event, "title")}
+              value={this.state.book.title}
+            />
+            <input
+              name="author"
+              onChange={(event) => this.handleChange(event, "author")}
+              value={this.state.book.author}
+            />
+            <input
+              name="imageUrl"
+              onChange={(event) => this.handleChange(event, "imageUrl")}
+              value={this.state.book.imageUrl}
+            />
+            <button
+              className="button is-small is-light"
+              onClick={this.submitEdit}
+            >
+              Confirm Edit
+            </button>
+            <button
+              className="button is-small is-light"
+              onClick={this.handleEditToggle}
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <></>
+        )}
+        <button
+          className="button is-small is-light"
+          onClick={this.handleDelete}
+        >
+          Delete
+        </button>
+        {this.props.book.checkout_id &&
+        this.props.book.checkout_id !== this.props.store.user.id ? (
+          <>
             <p>
-              {this.props.book.title}
-              <br />
-              By: {this.props.book.author}
+              This book is currently checked out by {this.props.book.username}
             </p>
-          )}
-
-          <button onClick={this.handleEditToggle}>Edit</button>
-          {this.state.editToggle ? (
-            <>
-              <input
-                name="title"
-                onChange={(event) => this.handleChange(event, "title")}
-                value={this.state.book.title}
-              />
-              <input
-                name="author"
-                onChange={(event) => this.handleChange(event, "author")}
-                value={this.state.book.author}
-              />
-              <input
-                name="imageUrl"
-                onChange={(event) => this.handleChange(event, "imageUrl")}
-                value={this.state.book.imageUrl}
-              />
-              <button onClick={this.submitEdit}>Confirm Edit</button>
-              <button onClick={this.handleEditToggle}>Cancel</button>
-            </>
-          ) : (
-            <></>
-          )}
-          <button onClick={this.handleDelete}>Delete</button>
-        </li>
+          </>
+        ) : (
+          <>
+            <p>This book is currently in your library.</p>
+          </>
+        )}
         <br />
-        <br />
-      </>
+      </li>
     );
   }
 }

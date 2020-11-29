@@ -32,6 +32,8 @@ class LoginForm extends Component {
 
   render() {
     return (
+      <>
+        <p>Welcome to BüK</p>
       <form className="formPanel" onSubmit={this.login}>
         <h2>Login</h2>
         {this.props.store.errors.loginMessage && (
@@ -67,6 +69,7 @@ class LoginForm extends Component {
           <input className="btn" type="submit" name="submit" value="Log In" />
         </div>
       </form>
+      </>
     );
   }
 }

@@ -1,4 +1,6 @@
 const bookReducer = (state = {}, action) => {
+
+  // holds book after API get
   switch (action.type) {
     case "SET_BOOK":
       return action.payload;

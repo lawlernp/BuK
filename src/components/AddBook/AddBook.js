@@ -17,7 +17,22 @@ class AddBook extends Component {
     },
     isbn: "",
   };
-
+  //// this bundles up the data from the OpenLibrary API get and sends it off to
+  // save in the DB
+  handleCameraAdd = () => {
+    const book = this.props.store.book;
+    const newBook = {
+      title: book.title,
+      author: book.authors[0].name,
+      imageUrl: book.cover.large,
+      publish_date: book.publish_date,
+    };
+    this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
+    alert("Book Added");
+    this.props.dispatch({ type: "UNSET_BOOK" });
+  };
+  //// this listens for changes in the manual input section and assigns
+  // them to state
   handleChange = (event, eventType) => {
     this.setState({
       newBook: {
@@ -27,13 +42,24 @@ class AddBook extends Component {
     });
     console.log(this.state.newBook);
   };
-
+  //// handles dispatching isbn manual search to hit the OpenLibrary API
+  handleSearch = () => {
+    if (this.state.isbn !== "") {
+      this.props.dispatch({
+        type: "GET_BOOK",
+        payload: this.state.isbn,
+      });
+    } else {
+      alert("Please enter a number.");
+    }
+  };
+  //// listens to the manual ISBN seach input and sets changes to state
   handleSearchChange = (event) => {
     this.setState({
       isbn: event.target.value,
     });
   };
-
+  //// handles dispatching for manual book add, checking for empty values
   handleSubmit = () => {
     if (
       this.state.newBook.title !== "" &&
@@ -47,73 +73,30 @@ class AddBook extends Component {
       alert("Please fill out all required fields");
     }
   };
-
-  handleSearch = () => {
-    this.props.dispatch({
-      type: "GET_BOOK",
-      payload: this.state.isbn,
-    });
-  };
-
-  toggleSearch = () => {
-    this.setState({
-      search: !this.state.search,
-      camera: false
-    });
-  };
-
+  //// handles toggle of camera search
   toggleCamera = () => {
     this.setState({
       camera: !this.state.camera,
     });
   };
-  // let newBook = {
-  //       image: checkIfImage(newBook)
-  //   }
-  //   const checkIfImage = (bookdata) => {
-  //       if (newbook.image.large) {
-  //           return newbook.image.large
-  //       } else {
-  //           return '/'
-  //       }
-  //   }
-
-  //  const checkIfImage = (book) => {
-  //       if (book.cover.large) {
-  //           return book.cover.large
-  //       } else {
-  //           return ''
-  //       }
-  //   }
-
-
-  handleCameraAdd = () => {
-    const book = this.props.store.book;
-    const newBook = {
-      title: book.title,
-      author: book.authors[0].name,
-      imageUrl: book.cover.large,
-      publish_date: book.publish_date,
-    };
-    this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
-    alert("Book Added");
-    this.props.dispatch({ type: "UNSET_BOOK" });
-
-    // this.props.history.push("/user");
+  //// handles toggle of search function
+  toggleSearch = () => {
+    this.setState({
+      search: !this.state.search,
+      camera: false,
+    });
   };
 
-  // this component doesn't do much to start, just renders some user info to the DOM
   render() {
     return (
       <div className="body">
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
-        <br/>
-        {/* <LogOutButton className="log-in" /> */}
+        <br />
         <p>Add Books Here</p>
-<br/>
+        <br />
         {!this.state.search ? (
           <>
-            <form onSubmit="return false">
+            <form>
               <label htmlFor="addTitle">Title:</label>
               <input
                 onChange={(event) => this.handleChange(event, "title")}
@@ -205,13 +188,12 @@ class AddBook extends Component {
           <>
             <Scanner />{" "}
             <button id="camera" className="button" onClick={this.toggleCamera}>
-              Back to Manual Search
+              Disable Camera
             </button>
           </>
         ) : (
           <></>
         )}
-        <br />
         <br />
 
         {this.props.store.book.title && this.state.search ? (

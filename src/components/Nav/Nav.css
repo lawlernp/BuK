@@ -8,14 +8,16 @@
 
 .nav {
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: #8E8BA5;
   overflow: hidden;
+  width: 95%;
+
 }
 
 .nav-link {
   float: left;
   color: #f2f2f2;
-  background-color: #00acb0;
+  background-color: #8E8BA5;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -29,12 +31,12 @@
 }
 
 .nav-link:hover {
-  background-color: #008183;
+  background-color: #5A5677;
 }
 .nav-linkout {
   float: left;
   color: #f2f2f2;
-  background-color: #00acb0;
+  background-color: #8E8BA5;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -49,7 +51,7 @@
 }
 
 .nav-linkout:hover {
-  background-color: #008183;
+  background-color: #5A5677;
 }
 
 .nav-right {

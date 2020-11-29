@@ -33,7 +33,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="background">
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -61,7 +61,7 @@ class App extends Component {
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
-              path="/library"
+              path="/add"
               component={AddBook}
             />
 
