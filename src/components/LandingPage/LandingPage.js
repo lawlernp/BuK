@@ -10,7 +10,7 @@ import LoginForm from "../LoginForm/LoginForm";
 
 class LandingPage extends Component {
   state = {
-    heading: "Class Component",
+    heading: "Here at BüK",
     login: true,
   };
 
@@ -26,7 +26,7 @@ class LandingPage extends Component {
         <h2>{this.state.heading}</h2>
 
         <div className="grid">
-          <div className="grid-col grid-col_8">
+          <div className="grid-col grid-col_4">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
               id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra
@@ -59,7 +59,7 @@ class LandingPage extends Component {
               pretium in sit amet nisi.
             </p>
           </div>
-          <div className="grid-col grid-col_4">
+          <div className="grid-col grid-col_8">
             {this.state.login ? <LoginForm /> : <RegisterForm />}
             <center>
               {this.state.login ? (

@@ -33,7 +33,7 @@ class LoginForm extends Component {
   render() {
     return (
       <>
-        <p>Welcome to BüK</p>
+        <p>Welcome</p>
       <form className="formPanel" onSubmit={this.login}>
         <h2>Login</h2>
         {this.props.store.errors.loginMessage && (

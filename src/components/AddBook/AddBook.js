@@ -68,7 +68,6 @@ class AddBook extends Component {
     ) {
       this.props.dispatch({ type: "ADD_BOOK", payload: this.state.newBook });
       alert("Book Added");
-      this.props.history.push("/user");
     } else {
       alert("Please fill out all required fields");
     }

@@ -63,34 +63,6 @@ class Library extends Component {
   render() {
     return (
       <>
-        <div id="friendSearch">
-          <input
-            placeholder="Search for user"
-            onChange={(event) => this.handleChange(event)}
-          />
-          <button
-            className="button is-small is-light"
-            onClick={this.handleSubmit}
-          >
-            Search
-          </button>
-          {this.props.store.friend.username ? (
-            <>
-              <p>Is this the user you were looking for?</p>
-              <p>
-                {this.props.store.friend.username}{" "}
-                <button
-                  className="button is-primary is-small is-light"
-                  onClick={this.addFriend}
-                >
-                  Add
-                </button>
-              </p>
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
         {/* <div id="friendList">
           {this.props.store.friendList[0] ?
           <>
@@ -103,7 +75,41 @@ class Library extends Component {
         }
         </div> */}
         <div>
-          <p>{this.props.store.user.username}'s Library</p>
+          <p className="header">{this.props.store.user.username}'s Library</p>
+          <br />
+          <br />
+          <div id="friendSearch">
+            <label htmlFor="userSearch">
+              Search for a user to add them to the checkout list:
+            </label>
+            <input
+              name="userSearch"
+              placeholder="Search for user"
+              onChange={(event) => this.handleChange(event)}
+            />
+            <button
+              className="button is-small is-light"
+              onClick={this.handleSubmit}
+            >
+              Search
+            </button>
+            {this.props.store.friend.username ? (
+              <>
+                <p>Is this the user you were looking for?</p>
+                <p>
+                  {this.props.store.friend.username}{" "}
+                  <button
+                    className="button is-primary is-small is-light"
+                    onClick={this.addFriend}
+                  >
+                    Add
+                  </button>
+                </p>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
           <br />
           <br />
           <br />
