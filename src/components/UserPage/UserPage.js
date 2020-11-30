@@ -26,6 +26,10 @@ class Library extends Component {
     });
     alert("Friend Added.");
   };
+  //// redirects users to addbook
+  bookRoute = () => {
+    this.props.history.push('/add')
+  }
   //// clears friend search results
   clearFriendSearch = () => {
     this.props.dispatch({
@@ -80,7 +84,7 @@ class Library extends Component {
           <br />
           <div id="friendSearch">
             <label htmlFor="userSearch">
-              Search for a user to add them to the checkout list:
+              Search for a user to add them to your checkout list:
             </label>
             <input
               id="userSearch"
@@ -124,7 +128,9 @@ class Library extends Component {
               })}
             </ul>
           ) : (
-            <></>
+            <>
+            <p id="empty">Looks like there is nothing here yet... <p id="addBook" onClick={this.bookRoute}><u>Add your books!</u></p></p>
+            </>
           )}
         </div>
       </>

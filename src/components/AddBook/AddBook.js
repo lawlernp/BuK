@@ -21,12 +21,22 @@ class AddBook extends Component {
   // save in the DB
   handleCameraAdd = () => {
     const book = this.props.store.book;
-    const newBook = {
+    let newBook
+    if (book.cover !== undefined) {
+      newBook = {
       title: book.title,
       author: book.authors[0].name,
       imageUrl: book.cover.large,
       publish_date: book.publish_date,
-    };
+    };} else {
+          newBook = {
+            title: book.title,
+            author: book.authors[0].name,
+            imageUrl:
+              "https://cdn.discordapp.com/attachments/598004536908578816/782985973456830504/placeholder.png",
+            publish_date: book.publish_date,
+          };}
+
     this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
     alert("Book Added");
     this.props.dispatch({ type: "UNSET_BOOK" });
@@ -121,14 +131,14 @@ class AddBook extends Component {
                 required
               />
               <br />
-              <label htmlFor="addTitle">Comments:</label>
+              <label htmlFor="addTitle">Notes:</label>
               <br />
               <textarea
                 className="text"
                 onChange={(event) => this.handleChange(event, "comments")}
                 id="addTitle"
                 name="addTitle"
-                placeholder="Comments"
+                placeholder="Notes"
                 rows="4"
                 cols="35"
               />
