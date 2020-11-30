@@ -74,7 +74,7 @@ class Library extends Component {
           <></>
         }
         </div> */}
-        <div>
+        <div id="userPage">
           <p className="header">{this.props.store.user.username}'s Library</p>
           <br />
           <br />
@@ -83,6 +83,7 @@ class Library extends Component {
               Search for a user to add them to the checkout list:
             </label>
             <input
+              id="userSearch"
               name="userSearch"
               placeholder="Search for user"
               onChange={(event) => this.handleChange(event)}
@@ -112,6 +113,9 @@ class Library extends Component {
           </div>
           <br />
           <br />
+          <hr/>
+          <p id="libraryLabel">My Library</p>
+          <hr/>
           <br />
           {this.props.store.library[0] ? (
             <ul>

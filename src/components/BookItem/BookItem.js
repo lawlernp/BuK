@@ -86,7 +86,7 @@ class BookItem extends Component {
     return (
       <>
         <li id={this.props.book.id}>
-          <div className="card">
+          <div id="card" className="card">
             <div className="checkout">
               <img
                 width="100px"

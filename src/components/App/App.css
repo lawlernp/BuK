@@ -18,6 +18,29 @@ body {
 
 }
 
+#card {
+  background-color: #a0a0a0;
+}
+
+#userPage {
+  background-image: url(../../assets/background.png);
+  background-attachment: fixed;
+  background-size: contain;
+}
+
+#friendSearch{
+  text-align: center;
+}
+
+#libraryLabel{
+  text-align: center;
+  font-size: 1.2em;
+}
+
+#userSearch{
+  line-height: 24px;
+}
+
 .body {
 margin: 0 auto;
 width: 90%;
