@@ -171,6 +171,28 @@ class AddBook extends Component {
         {this.state.search ? (
           <>
             <p>Searching by ISBN</p>
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <button
+                  class="button"
+                  aria-haspopup="true"
+                  aria-controls="dropdown-menu4"
+                >
+                  <span>Where do I find the ISBN?</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                <div class="dropdown-content">
+                  <div class="dropdown-item">
+                    <img src="https://dispatch.barnesandnoble.com/content/dam/ccr/bnstores/textbooks/misc/BN_Textbook_Tooltip_ISBN.jpg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <br />
           </>
         ) : (
@@ -179,11 +201,17 @@ class AddBook extends Component {
 
         {this.state.search && !this.state.camera ? (
           <>
-            <input placeholder="ISBN" onChange={this.handleSearchChange} />
+            <input
+              id="isbn"
+              placeholder="ISBN"
+              onChange={this.handleSearchChange}
+            />
 
             <button className="button" onClick={this.handleSearch}>
               Search
             </button>
+            <br />
+            <br />
 
             <button id="camera" className="button" onClick={this.toggleCamera}>
               Use Camera?

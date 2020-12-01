@@ -31,6 +31,10 @@ body {
   text-align: center;
 }
 
+#isbn{
+  line-height: 34px;
+}
+
 #friendSearch{
   text-align: center;
 }

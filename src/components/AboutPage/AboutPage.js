@@ -10,7 +10,8 @@ const AboutPage = () => (
         <li>Node</li>
         <li>Express</li>
         <li>Bulma</li>
-        <li>react-webcam & react-webcam-barcode-scanner to grab isbn from barcodes</li>
+        <li>react-webcam & </li>
+        <li>react-webcam-barcode-scanner to grab data from UPC's</li>
         <li>OpenLibrary.org and their API</li>
       </ul>
       <br/>
