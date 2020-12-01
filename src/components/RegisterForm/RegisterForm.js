@@ -29,7 +29,7 @@ class RegisterForm extends Component {
   render() {
     return (
       <>
-      <p>Welcome to BüK</p>
+      <p>Welcome!</p>
       <form className="formPanel" onSubmit={this.registerUser}>
         <h2>Register User</h2>
         {this.props.store.errors.registrationMessage && (

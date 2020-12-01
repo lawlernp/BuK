@@ -34,10 +34,12 @@ class BookItem extends Component {
       id: this.props.book.id,
       user: event.target.value,
     };
-    this.props.dispatch({
-      type: "CHECKOUT_BOOK",
-      payload: checkout,
-    });
+    if (event.target.value !== "") {
+      this.props.dispatch({
+        type: "CHECKOUT_BOOK",
+        payload: checkout,
+      });
+    }
   };
   //// toggles edit inputs
   handleEditToggle = () => {
@@ -48,6 +50,17 @@ class BookItem extends Component {
   //// dispatches a delete for current book
   handleDelete = () => {
     this.props.dispatch({ type: "DELETE_BOOK", payload: this.props.book.id });
+  };
+  //// returns book to user's library
+  returnBook = () => {
+    const checkout = {
+      id: this.props.book.id,
+      user: this.props.store.user.id,
+    };
+    this.props.dispatch({
+      type: "CHECKOUT_BOOK",
+      payload: checkout,
+    });
   };
   //// checks for empty inputs and submits edits to book to DB
   submitEdit = () => {
@@ -71,103 +84,129 @@ class BookItem extends Component {
 
   render() {
     return (
-      <li id={this.props.book.id}>
-        <img
-          width="100px"
-          src={this.props.book.imageUrl}
-          alt={this.props.book.title}
-        />
-
-        <label htmlFor="users">Checkout to user:</label>
-        <select
-          onChange={(event) => this.handleCheckoutChange(event)}
-          name="users"
-          id="users"
-        >
-          <optgroup label="Users">
-            <option value={this.props.store.user.id}>Me</option>
-            {this.props.store.friendList[0] ? (
+      <>
+        <li id={this.props.book.id}>
+          <div id="card" className="card">
+            <div className="checkout">
+              <img
+                width="100px"
+                src={this.props.book.imageUrl}
+                alt={this.props.book.title}
+              />
+              <label htmlFor="users">Checkout to user:</label>
+              <select
+                onChange={(event) => this.handleCheckoutChange(event)}
+                name="users"
+                id="users"
+              >
+                <optgroup label="Users">
+                  <option value="">Select here</option>
+                  {this.props.store.friendList[0] ? (
+                    <>
+                      {this.props.store.friendList.map((friend) => {
+                        return (
+                          <option value={friend.id}>{friend.username}</option>
+                        );
+                      })}
+                      {/* <button onClick= */}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </optgroup>
+              </select>
+            </div>
+            {this.state.editToggle ? (
+              <></>
+            ) : (
               <>
-                {this.props.store.friendList.map((friend) => {
-                  return <option value={friend.id}>{friend.username}</option>;
-                })}
-                {/* <button onClick= */}
+                <p>
+                  <h1 className="title">{this.props.book.title}</h1>
+                  <h1 className="subtitle">
+                    <span className="subtitle is-6">by: </span>
+                    {this.props.book.author}
+                  </h1>
+                </p>
+                <button
+                  className="button is-small is-light"
+                  onClick={this.handleEditToggle}
+                >
+                  Edit
+                </button>
+              </>
+            )}
+
+            {this.state.editToggle ? (
+              <>
+              <div>
+                <input
+                  name="title"
+                  onChange={(event) => this.handleChange(event, "title")}
+                  value={this.state.book.title}
+                />
+                <input
+                  name="imageUrl"
+                  onChange={(event) => this.handleChange(event, "imageUrl")}
+                  value={this.state.book.imageUrl}
+                />
+                </div>
+                <label className="subtitle is-6" htmlFor="author">
+                  by:
+                </label>
+                <input
+                  name="author"
+                  onChange={(event) => this.handleChange(event, "author")}
+                  value={this.state.book.author}
+                />
+                <button
+                  className="button is-small is-light"
+                  onClick={this.submitEdit}
+                >
+                  Confirm Edit
+                </button>
+                <button
+                  className="button is-small is-light"
+                  onClick={this.handleEditToggle}
+                >
+                  Cancel
+                </button>
               </>
             ) : (
               <></>
             )}
-          </optgroup>
-        </select>
-
-        {this.state.editToggle ? (
-          <></>
-        ) : (
-          <p>
-            {this.props.book.title}
+            <button
+              className="button is-small is-danger is-light"
+              onClick={this.handleDelete}
+            >
+              Remove
+            </button>
+            {this.props.book.checkout_id &&
+            this.props.book.checkout_id !== this.props.store.user.id ? (
+              <>
+                <p>
+                  This book is currently checked out by <b>{this.props.book.username}</b>.
+                </p>
+                <p>
+                  <button
+                    className="button is-info is-small is-light"
+                    onClick={this.returnBook}
+                  >
+                    Return
+                  </button>
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  This book is currently <b>in your library</b>.
+                </p>
+              </>
+            )}
             <br />
-            By: {this.props.book.author}
-          </p>
-        )}
-
-        <button
-          className="button is-small is-light"
-          onClick={this.handleEditToggle}
-        >
-          Edit
-        </button>
-        {this.state.editToggle ? (
-          <>
-            <input
-              name="title"
-              onChange={(event) => this.handleChange(event, "title")}
-              value={this.state.book.title}
-            />
-            <input
-              name="author"
-              onChange={(event) => this.handleChange(event, "author")}
-              value={this.state.book.author}
-            />
-            <input
-              name="imageUrl"
-              onChange={(event) => this.handleChange(event, "imageUrl")}
-              value={this.state.book.imageUrl}
-            />
-            <button
-              className="button is-small is-light"
-              onClick={this.submitEdit}
-            >
-              Confirm Edit
-            </button>
-            <button
-              className="button is-small is-light"
-              onClick={this.handleEditToggle}
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <></>
-        )}
-        <button
-          className="button is-small is-light"
-          onClick={this.handleDelete}
-        >
-          Delete
-        </button>
-        {this.props.book.checkout_id &&
-        this.props.book.checkout_id !== this.props.store.user.id ? (
-          <>
-            <p>
-              This book is currently checked out by {this.props.book.username}
-            </p>
-          </>
-        ) : (
-          <>
-            <p>This book is currently in your library.</p>
-          </>
-        )}
+          </div>
+        </li>
         <br />
-      </li>
+      </>
     );
   }
 }

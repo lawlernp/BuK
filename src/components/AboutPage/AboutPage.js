@@ -1,14 +1,31 @@
 import React from 'react';
 
-// This is one of our simplest components
-// It doesn't have local state, so it can be a function component.
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is, so it doesn't need 'connect()'
-
 const AboutPage = () => (
   <div className="container">
     <div>
-      <p>This about page is for anyone to read!</p>
+      <p>Technologies used:</p>
+      <ul>
+        <li>React</li>
+        <li>Redux</li>
+        <li>Node</li>
+        <li>Express</li>
+        <li>Bulma</li>
+        <li>react-webcam & </li>
+        <li>react-webcam-barcode-scanner to grab data from UPC's</li>
+        <li>OpenLibrary.org and their API</li>
+      </ul>
+      <br/>
+      <p>Thanks to:</p>
+      <p>Bre</p>
+      <p>Squee</p>
+      <p>Andrew</p>
+      <p>Dad & Mom</p>
+      <p>Ukkonen Cohort</p>
+      <p>Casie</p>
+      <p>Prime Academy</p>
+      <br/>
+      <p>Contact:</p>
+      <p>lawlernp@gmail.com</p>
     </div>
   </div>
 );

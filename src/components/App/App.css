@@ -18,6 +18,36 @@ body {
 
 }
 
+#card {
+  background-color: #a0a0a0cc;
+}
+#userPage {
+  background-image: url(../../assets/background.png);
+  background-attachment: fixed;
+  background-size: contain;
+}
+
+#empty {
+  text-align: center;
+}
+
+#isbn{
+  line-height: 34px;
+}
+
+#friendSearch{
+  text-align: center;
+}
+
+#libraryLabel{
+  text-align: center;
+  font-size: 1.2em;
+}
+
+#userSearch{
+  line-height: 24px;
+}
+
 .body {
 margin: 0 auto;
 width: 90%;
@@ -27,6 +57,10 @@ background-color: #6e6e6e;
 
 }
 
+.header {
+  font-size: x-large;
+  text-align: center;
+}
 
 img {
   display: inline-block;
@@ -120,7 +154,7 @@ Form Treatment
   max-width: 100%;
   padding: 25px;
   margin: 0 auto 20px;
-  background-color: #efefef;
+  background-color: #a0a0a0;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }

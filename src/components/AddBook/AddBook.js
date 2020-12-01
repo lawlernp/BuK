@@ -21,12 +21,22 @@ class AddBook extends Component {
   // save in the DB
   handleCameraAdd = () => {
     const book = this.props.store.book;
-    const newBook = {
+    let newBook
+    if (book.cover !== undefined) {
+      newBook = {
       title: book.title,
       author: book.authors[0].name,
       imageUrl: book.cover.large,
       publish_date: book.publish_date,
-    };
+    };} else {
+          newBook = {
+            title: book.title,
+            author: book.authors[0].name,
+            imageUrl:
+              "https://cdn.discordapp.com/attachments/598004536908578816/782985973456830504/placeholder.png",
+            publish_date: book.publish_date,
+          };}
+
     this.props.dispatch({ type: "ADD_BOOK", payload: newBook });
     alert("Book Added");
     this.props.dispatch({ type: "UNSET_BOOK" });
@@ -68,7 +78,6 @@ class AddBook extends Component {
     ) {
       this.props.dispatch({ type: "ADD_BOOK", payload: this.state.newBook });
       alert("Book Added");
-      this.props.history.push("/user");
     } else {
       alert("Please fill out all required fields");
     }
@@ -122,14 +131,14 @@ class AddBook extends Component {
                 required
               />
               <br />
-              <label htmlFor="addTitle">Comments:</label>
+              <label htmlFor="addTitle">Notes:</label>
               <br />
               <textarea
                 className="text"
                 onChange={(event) => this.handleChange(event, "comments")}
                 id="addTitle"
                 name="addTitle"
-                placeholder="Comments"
+                placeholder="Notes"
                 rows="4"
                 cols="35"
               />
@@ -162,6 +171,28 @@ class AddBook extends Component {
         {this.state.search ? (
           <>
             <p>Searching by ISBN</p>
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <button
+                  class="button"
+                  aria-haspopup="true"
+                  aria-controls="dropdown-menu4"
+                >
+                  <span>Where do I find the ISBN?</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                <div class="dropdown-content">
+                  <div class="dropdown-item">
+                    <img src="https://dispatch.barnesandnoble.com/content/dam/ccr/bnstores/textbooks/misc/BN_Textbook_Tooltip_ISBN.jpg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <br />
           </>
         ) : (
@@ -170,11 +201,17 @@ class AddBook extends Component {
 
         {this.state.search && !this.state.camera ? (
           <>
-            <input placeholder="ISBN" onChange={this.handleSearchChange} />
+            <input
+              id="isbn"
+              placeholder="ISBN"
+              onChange={this.handleSearchChange}
+            />
 
             <button className="button" onClick={this.handleSearch}>
               Search
             </button>
+            <br />
+            <br />
 
             <button id="camera" className="button" onClick={this.toggleCamera}>
               Use Camera?
